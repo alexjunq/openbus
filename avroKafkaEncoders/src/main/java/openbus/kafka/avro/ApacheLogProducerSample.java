@@ -65,36 +65,40 @@ public class ApacheLogProducerSample {
 	
 
 	private String resource;
+	private String topic;	
 	
 	/**
 	 * 
 	 * @param resource properties resource path with brokerList, target topic and day offset from current date for generating different datetimes for ApacheLog messages
-	 * kafka.brokerList=localhost:9092
-	 * kafka.topic=apacheLogAvro20131022
-	 * producer.dateOffset=-1 #yesterday
+	 * 		kafka.brokerList=localhost:9092
+	 * 		kafka.topic=apacheLogAvro20131022
+	 * 		producer.dateOffset=-1 #yesterday
+	 * @param topic override the topic specified in the above resource
 	 */
-    public ApacheLogProducerSample(String resource) {
+    public ApacheLogProducerSample(String resource, String topic) {
 
     	this.resource=resource;
+    	this.topic=topic;
 	}
 
     /**
      * 
-     * @param args 0: total messages, 1: users, 2: sessions per user, 3: request per session  
-     * 
+     * @param args: topic, total messages, users, sessions per user, request per session  
+     *         topic is mandatory when supplying the others
      */
 	public static void main(String[] args) {
     	
     	int nMessages=100000, nUsers=5, nSessions=10, nRequests=100;
-    	
+    	String topic=null;
     	if(args.length>0) {
-    		nMessages=Integer.parseInt(args[0]);
-    		nUsers=Integer.parseInt(args[1]);
-    		nSessions=Integer.parseInt(args[2]);
-    		nRequests=Integer.parseInt(args[3]);
+    		topic=args[0];
+    		nMessages=Integer.parseInt(args[1]);
+    		nUsers=Integer.parseInt(args[2]);
+    		nSessions=Integer.parseInt(args[3]);
+    		nRequests=Integer.parseInt(args[4]);
     	}
     	
-    	ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka.properties");
+    	ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka.properties",topic);
     	aps.apacheLogProducerHelper(nMessages, nUsers, nSessions, nRequests);
     }
 	
@@ -118,8 +122,8 @@ public class ApacheLogProducerSample {
 			}    	
 	    	
 	    	int dateOffset=Integer.parseInt(kafkaProps.get("producer.dateOffset").toString());
-	    	
-	    	AvroProducer ap = new AvroProducer(kafkaProps.getProperty("kafka.brokerList"), kafkaProps.getProperty("kafka.topic"), "/apacheLog.avsc", FIELDS);
+	    	if(topic==null) kafkaProps.getProperty("kafka.topic");
+	    	AvroProducer ap = new AvroProducer(kafkaProps.getProperty("kafka.brokerList"), topic, "/apacheLog.avsc", FIELDS);
 	    	
 			String[] HOSTREMOTO={ "85.155.188.198","85.155.188.199","85.155.188.197","85.155.188.196","85.155.188.195","85.155.188.190"};
 			String NOMBRELOGREMOTO="-";
