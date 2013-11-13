@@ -93,13 +93,12 @@ public class AvroSchemaSerializer implements kafka.serializer.Encoder  {
 			dataFileWriter.create(schema, os);
 
 	        GenericRecord datum = new GenericData.Record(schema);
-	        StringTokenizer st = new StringTokenizer(str, delimeter);
+	        String[] st = str.split(delimeter);
 	        int i=0;
-	        while(st.hasMoreTokens()) {        
-	        	datum.put(fields[i++],st.nextElement());
+	        for(String s : st){
+	        	datum.put(fields[i++], s);
 	        }
-	
-	
+	        
 	        dataFileWriter.append(datum);
 	        dataFileWriter.close();
 	        
@@ -120,7 +119,7 @@ public class AvroSchemaSerializer implements kafka.serializer.Encoder  {
      * Encodes an space-delimited object tostring 
      */
 	public byte[] toBytes(Object arg0) {
-		return this.toBytes(arg0.toString()," ");
+		return this.toBytes(arg0.toString(),"_#_");
 	}
 
 }
