@@ -129,12 +129,12 @@ public class ApacheLogProducerSample {
 			String NOMBRELOGREMOTO="-";
 			String USUARIOREMOTO="user";
 			String TIEMPOEJECPETICION="[17/Sep/2012:19:01:24+0200]";
-			String LINEAPETICION="GET_/Estatico/Globales/V114/Bhtcs/Internet/AT/";
+			String LINEAPETICION="GET /Estatico/Globales/V114/Bhtcs/Internet/AT/";
 			String ESTADOPETICION="200";
 			String TAMANORESPUESTA="3117";
 			String REFERER="-";
 			String USERAGENT="Chrome/21.0.1180.89";
-			String IDSESION="0000z2ur1hruUUG-MhpsITK9JY_:16vnisqka";
+			String IDSESION="0000z2ur1hruUUG-MhpsITK9JY :16vnisqka";
 			//String TIEMPORESPUESTA="1020";
 			
 			
@@ -155,20 +155,20 @@ public class ApacheLogProducerSample {
 						for(int m=0;m<nRequests;m++) {					
 								
 							cal.add(Calendar.SECOND,20);
-							LINEAPETICION="GET_/Estatico/Globales/V114/Bhtcs/Internet/AT/" + m%20;
-							TIEMPOEJECPETICION=cal.getTime().toString().replace(" ", "_"); 
+							LINEAPETICION="GET /Estatico/Globales/V114/Bhtcs/Internet/AT/" + m%20;
+							TIEMPOEJECPETICION=cal.getTime().toString(); 
 							
 							String payload=
-									 HOSTREMOTO[k%5] + " " +
-									 NOMBRELOGREMOTO + " " +
-									 USUARIOREMOTO + " " +
-									 TIEMPOEJECPETICION + " " +
-									 LINEAPETICION + " " +
-									 ESTADOPETICION + " " +
-									 TAMANORESPUESTA + " " +
-									 REFERER + " " +
-									 USERAGENT + " " +
-									 IDSESION + " " +
+									 HOSTREMOTO[k%5] + "_#_" +
+									 NOMBRELOGREMOTO + "_#_" +
+									 USUARIOREMOTO + "_#_" +
+									 TIEMPOEJECPETICION + "_#_" +
+									 LINEAPETICION + "_#_" +
+									 ESTADOPETICION + "_#_" +
+									 TAMANORESPUESTA + "_#_" +
+									 REFERER + "_#_" +
+									 USERAGENT + "_#_" +
+									 IDSESION + "_#_" +
 									 String.valueOf(m*100%10000);		//TIEMPORESPUESTA				
 					
 							ap.send(payload);
@@ -176,8 +176,7 @@ public class ApacheLogProducerSample {
 					}
 				}
 			}
-			
-			
+						
 			ap.close();
 
 	    }
