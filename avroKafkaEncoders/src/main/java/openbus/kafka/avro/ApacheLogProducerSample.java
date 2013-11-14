@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Properties;
+import java.lang.Math;
 
 import org.apache.log4j.Logger;
 
@@ -66,6 +67,7 @@ public class ApacheLogProducerSample {
 
 	private String resource;
 	private String topic;	
+	private int offset;
 	
 	/**
 	 * 
@@ -75,10 +77,11 @@ public class ApacheLogProducerSample {
 	 * 		producer.dateOffset=-1 #yesterday
 	 * @param topic override the topic specified in the above resource
 	 */
-    public ApacheLogProducerSample(String resource, String topic) {
+    public ApacheLogProducerSample(String resource, String topic, int offset) {
 
     	this.resource=resource;
-    	this.topic=topic;
+    	this.topic=topic;    	
+    	this.offset=offset; 
 	}
 
     /**
@@ -90,15 +93,17 @@ public class ApacheLogProducerSample {
     	
     	int nMessages=100000, nUsers=5, nSessions=10, nRequests=100;
     	String topic=null;
+    	int offset=0;
     	if(args.length>0) {
     		topic=args[0];
     		nMessages=Integer.parseInt(args[1]);
     		nUsers=Integer.parseInt(args[2]);
     		nSessions=Integer.parseInt(args[3]);
-    		nRequests=Integer.parseInt(args[4]);
+    		nRequests=Integer.parseInt(args[4]);    		
+    		if (args[5] != null)  offset=Integer.parseInt(args[5]);
     	}
     	
-    	ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka.properties",topic);
+    	ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka.properties",topic, offset);
     	aps.apacheLogProducerHelper(nMessages, nUsers, nSessions, nRequests);
     }
 	
@@ -121,7 +126,10 @@ public class ApacheLogProducerSample {
 				e.printStackTrace();
 			}    	
 	    	
-	    	int dateOffset=Integer.parseInt(kafkaProps.get("producer.dateOffset").toString());
+	    	int dateOffset=offset;
+	    	if (offset==0){
+	    		dateOffset=Integer.parseInt(kafkaProps.get("producer.dateOffset").toString());
+	    	}
 	    	if(topic==null) kafkaProps.getProperty("kafka.topic");
 	    	AvroProducer ap = new AvroProducer(kafkaProps.getProperty("kafka.brokerList"), topic, "/apacheLog.avsc", FIELDS);
 	    	
@@ -129,12 +137,12 @@ public class ApacheLogProducerSample {
 			String NOMBRELOGREMOTO="-";
 			String USUARIOREMOTO="user";
 			String TIEMPOEJECPETICION="[17/Sep/2012:19:01:24+0200]";
-			String LINEAPETICION="GET /Estatico/Globales/V114/Bhtcs/Internet/AT/";
+			String LINEAPETICION="index";
 			String ESTADOPETICION="200";
 			String TAMANORESPUESTA="3117";
 			String REFERER="-";
 			String USERAGENT="Chrome/21.0.1180.89";
-			String IDSESION="0000z2ur1hruUUG-MhpsITK9JY :16vnisqka";
+			String IDSESION="0000z2ur1hruUUG-MhpsITK9JY_:16vnisqka";
 			//String TIEMPORESPUESTA="1020";
 			
 			
@@ -146,6 +154,8 @@ public class ApacheLogProducerSample {
 				for(int j=0;j<nUsers;j++) {
 						cal.setTime(datetime);
 						cal.add(Calendar.DAY_OF_MONTH, dateOffset);
+						int randomNum = 1 + (int)(Math.random()*3); 
+						if (randomNum>1)  continue;
 						USUARIOREMOTO="user"+j;
 						
 					for(int k=0;k<nSessions;k++) { 
@@ -155,7 +165,7 @@ public class ApacheLogProducerSample {
 						for(int m=0;m<nRequests;m++) {					
 								
 							cal.add(Calendar.SECOND,20);
-							LINEAPETICION="GET /Estatico/Globales/V114/Bhtcs/Internet/AT/" + m%20;
+							LINEAPETICION="index" + m%(2*(j+1));
 							TIEMPOEJECPETICION=cal.getTime().toString(); 
 							
 							String payload=

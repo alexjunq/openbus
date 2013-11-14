@@ -47,8 +47,8 @@ public class ApacheLogProducerTest  extends TestCase  {
 	 * 
 	 */
 	public void testApacheLogProducer() {
-		ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka-test.properties","testtopic1");
-		aps.apacheLogProducerHelper(1000,5,10,10);		
+		ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka-test.properties","testtopic1", 0);
+		aps.apacheLogProducerHelper(100,5,10,10);		
         assertTrue( true );
 	}
 	
