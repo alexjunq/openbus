@@ -1,7 +1,7 @@
 Openbus
 =======
 
-A Produban initiative for the development of a common infraestructure to store, analyze and visualize log events, both in real-time and batch.
+A [Produban](http://www.produban.com/) initiative for the development of a common infraestructure to store, analyze and visualize log events, both in real-time and batch.
 
 Currently openbus has the following subprojects:
 
