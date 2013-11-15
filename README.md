@@ -7,6 +7,7 @@ Currently openbus has the following subprojects:
 
  -  [openbus-broker](./openbus-broker): event producers, consumers and serializers.
  -  [openbus-batch](./openbus-batch): Hadoop stuff, Pig and Hive scripts, custom UDFs.
+ -  [openbus-realtime](./openbus-realtime): Storm stuff.
 
-Soon we expect to add more subprojects such as `openbus-realtime`, `openbus-search` and `openbus-viz`.
+Soon we expect to add more subprojects such as `openbus-search` and `openbus-viz`.
 
