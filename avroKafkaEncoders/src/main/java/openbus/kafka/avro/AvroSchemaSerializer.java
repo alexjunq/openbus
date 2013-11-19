@@ -102,7 +102,7 @@ public class AvroSchemaSerializer implements kafka.serializer.Encoder  {
 	        dataFileWriter.append(datum);
 	        dataFileWriter.close();
 	        
-	        logger.info("encoded string: " + os.toString());
+	        logger.debug("encoded string: " + os.toString());
 	        os.close();
 
         } catch (IOException e) {
@@ -110,7 +110,7 @@ public class AvroSchemaSerializer implements kafka.serializer.Encoder  {
 			e.printStackTrace();
 		}
               
-        logger.info("size: " + os.size());
+        logger.debug("size: " + os.size());
         return os.toByteArray();	
         
     }
