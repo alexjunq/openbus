@@ -52,6 +52,24 @@ public class ApacheLogProducerTest  extends TestCase  {
         assertTrue( true );
 	}
 	
-
+	/**
+	 *  send 1 messages, with 1 users, 1 sessions and 1 requests
+	 * 
+	 */
+	public void testApacheLogProducerMin() {
+		ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka-test.properties","testtopic2");
+		aps.apacheLogProducerHelper(1,1,1,1);		
+        assertTrue( true );
+	}
+	
+	/**
+	 *  send 1 messages, with 1 users, 1 sessions and 1 requests
+	 * 
+	 */
+	public void testApacheLogProducer2Users() {
+		ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka-test.properties","tsdb1");
+		aps.apacheLogProducerHelper(100,2,2,10);		
+        assertTrue( true );
+	}	
    
 }

@@ -147,7 +147,9 @@ public class ApacheLogProducerSample {
 			
 			
 			Date datetime= new Date();
+			Date lasttime=new Date();
 			Calendar cal = new GregorianCalendar();		
+			logger.info("starting at " + datetime + ", " + datetime.getTime()/1000);
 			
 			for(int i=0;i<nMessages/nUsers/nRequests/nSessions;i++) {
 				
@@ -159,14 +161,16 @@ public class ApacheLogProducerSample {
 						USUARIOREMOTO="user"+j;
 						
 					for(int k=0;k<nSessions;k++) { 
-						cal.add(Calendar.HOUR_OF_DAY,1);
+						cal.add(Calendar.MINUTE,1);
 						IDSESION="0000z2ur1hruUUG-MhpsITK9JY_:" + k;
 						
 						for(int m=0;m<nRequests;m++) {					
 								
-							cal.add(Calendar.SECOND,20);
-							LINEAPETICION="index" + m%(2*(j+1));
-							TIEMPOEJECPETICION=cal.getTime().toString(); 
+							cal.add(Calendar.SECOND,1);
+							if(cal.getTime().getTime()>lasttime.getTime()) lasttime=cal.getTime();
+							
+							LINEAPETICION="page" + m%(2*(j+1));
+							TIEMPOEJECPETICION=cal.getTime().toString().replace(" ", "_"); 
 							
 							String payload=
 									 HOSTREMOTO[k%5] + "_#_" +
@@ -186,7 +190,8 @@ public class ApacheLogProducerSample {
 					}
 				}
 			}
-						
+			
+			logger.info("ending  at " + lasttime + ", " + lasttime.getTime()/1000);
 			ap.close();
 
 	    }
