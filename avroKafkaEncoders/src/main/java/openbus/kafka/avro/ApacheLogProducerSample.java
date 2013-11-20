@@ -151,27 +151,28 @@ public class ApacheLogProducerSample {
 			Calendar cal = new GregorianCalendar();		
 			logger.info("starting at " + datetime + ", " + datetime.getTime()/1000);
 			
-			for(int i=0;i<nMessages/nUsers/nRequests/nSessions;i++) {
+			int count=0;
+			for(int i=0;i<nMessages/*/nUsers/nRequests/nSessions*/;i++) {
 				
-				for(int j=0;j<nUsers;j++) {
+				for(int j=0;j<nSessions;j++) {
 						cal.setTime(datetime);
 						cal.add(Calendar.DAY_OF_MONTH, dateOffset);
-						int randomNum = 1 + (int)(Math.random()*3); 
-						if (randomNum>1)  continue;
-						USUARIOREMOTO="user"+j;
+
 						
-					for(int k=0;k<nSessions;k++) { 
-						cal.add(Calendar.MINUTE,1);
-						IDSESION="0000z2ur1hruUUG-MhpsITK9JY_:" + k;
+					for(int k=0;k<nRequests;k++) { 
 						
-						for(int m=0;m<nRequests;m++) {					
-								
-							cal.add(Calendar.SECOND,1);
+
+						for(int m=0;m<nUsers;m++) {					
+							
+							int randomNum =  (int)(Math.random()*(m+1)); 
+							if (randomNum>=(nUsers/2))  continue;
+							
 							if(cal.getTime().getTime()>lasttime.getTime()) lasttime=cal.getTime();
 							
-							LINEAPETICION="page" + m%(2*(j+1));
+							IDSESION="0000z2ur1hruUUG-MhpsITK9JY_:" + k;
+							LINEAPETICION="page" + j%(2*(m+1));
 							TIEMPOEJECPETICION=cal.getTime().toString().replace(" ", "_"); 
-							
+							USUARIOREMOTO="user"+m;
 							String payload=
 									 HOSTREMOTO[k%5] + "_#_" +
 									 NOMBRELOGREMOTO + "_#_" +
@@ -186,12 +187,16 @@ public class ApacheLogProducerSample {
 									 String.valueOf(m*100%10000);		//TIEMPORESPUESTA				
 					
 							ap.send(payload);
+							count++;
+							cal.add(Calendar.SECOND,5);
 						}		
 					}
+					cal.add(Calendar.MINUTE,5);
 				}
 			}
 			
 			logger.info("ending  at " + lasttime + ", " + lasttime.getTime()/1000);
+			logger.info(count + " registros enviados a kafka");
 			ap.close();
 
 	    }
