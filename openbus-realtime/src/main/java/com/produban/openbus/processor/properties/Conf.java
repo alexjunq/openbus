@@ -55,5 +55,4 @@ public interface Conf {
 	public final static String FILTER_NOT_REQUEST_WEBSERVER = ".*\\.(png|jpg|css|js|bmp|gif)";	
 	public final static String FILTER_STATUS_WEBSERVER = "^(200)";
 	public final static String FILTER_NOT_STATUS_WEBSERVER = "";	
-	public static final String SCHEMA_APACHE_LOGS = "apacheLog.avsc";
 }
