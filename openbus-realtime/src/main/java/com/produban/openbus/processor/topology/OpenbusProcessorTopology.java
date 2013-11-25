@@ -17,6 +17,7 @@ package com.produban.openbus.processor.topology;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,6 @@ import storm.trident.Stream;
 import storm.trident.TridentTopology;
 import storm.trident.operation.builtin.Count;
 import storm.trident.state.StateFactory;
-import storm.trident.testing.MemoryMapState;
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
@@ -43,14 +43,15 @@ import com.produban.openbus.processor.properties.Conf;
 import com.produban.openbus.processor.properties.Constant;
 import com.produban.openbus.processor.spout.BrokerSpout;
 import com.produban.openbus.processor.util.LogFilter;
+import com.produban.openbus.processor.util.OptionsTip;
 
 /**
  * Topology openbus-realtime
  * 
  */
 public class OpenbusProcessorTopology {	
-	private static Logger LOG = LoggerFactory.getLogger(OpenbusProcessorTopology.class);
-		    
+	private static final Logger LOG = LoggerFactory.getLogger(OpenbusProcessorTopology.class);
+	    	
 	public static StormTopology buildTopology(Config conf) {			
 		TridentTopology topology = new TridentTopology();
 		Stream stream = null;
@@ -86,12 +87,22 @@ public class OpenbusProcessorTopology {
 	    @SuppressWarnings("unchecked")
 	    StateFactory stateUser = HBaseAggregateState.transactional(configUser);
 		
-		BrokerSpout openbusBrokerSpout = new BrokerSpout(
-				(String)conf.get(Conf.PROP_BROKER_TOPIC), 
-				(String)conf.get(Conf.PROP_ZOOKEEPER_HOST), 
-				(String)conf.get(Conf.PROP_ZOOKEEPER_BROKER),
-				(String)conf.get(Conf.PROP_KAFKA_IDCLIENT));
-			
+	    BrokerSpout openbusBrokerSpout = null;
+	    
+	    if(conf.get(Conf.STATIC_HOST) == null || "".equals(conf.get(Conf.STATIC_HOST))) {
+			openbusBrokerSpout = new BrokerSpout(
+					(String)conf.get(Conf.PROP_BROKER_TOPIC), 
+					(String)conf.get(Conf.PROP_ZOOKEEPER_HOST), 
+					(String)conf.get(Conf.PROP_ZOOKEEPER_BROKER),
+					(String)conf.get(Conf.PROP_KAFKA_IDCLIENT));	    
+	    } else {
+	    	openbusBrokerSpout = new BrokerSpout(
+	    			(String)conf.get(Conf.PROP_BROKER_TOPIC), 
+	    			(String)conf.get(Conf.STATIC_HOST), 
+	    			new Integer(Conf.KAFKA_BROKER_PORT).intValue(),
+	    			(String)conf.get(Conf.PROP_KAFKA_IDCLIENT));	    
+	    }
+	    
 		stream = topology.newStream("spout", openbusBrokerSpout.getPartitionedTridentSpout());			
 		stream = stream.each(new Fields("bytes"), new AvroLogDecoder(), new Fields(fieldsWebLog));	    	   	    	    
 		stream = stream.each(new Fields(fieldsWebLog), new WebServerLogFilter());
@@ -99,14 +110,14 @@ public class OpenbusProcessorTopology {
 		stream.each(new Fields("request", "datetime"), new DatePartition(), new Fields("cq", "cf"))
 				.groupBy(new Fields("request", "cq", "cf"))
 				.persistentAggregate(stateRequest, new Count(), new Fields("count"))
-				//.persistentAggregate(new MemoryMapState.Factory(), new Count(), new Fields("count"))					
+				//.persistentAggregate(new MemoryMapState.Factory(), new Count(), new Fields("count"))	// Test				
 				.newValuesStream()
 				.each(new Fields("request", "cq", "cf", "count"), new LogFilter());
 		
 		stream.each(new Fields("user", "datetime"), new DatePartition(), new Fields("cq", "cf"))
 				.groupBy(new Fields("user", "cq", "cf"))
 				.persistentAggregate(stateUser, new Count(), new Fields("count"))
-				//.persistentAggregate(new MemoryMapState.Factory(), new Count(), new Fields("count"))					
+				//.persistentAggregate(new MemoryMapState.Factory(), new Count(), new Fields("count"))	// Test				
 				.newValuesStream()
 				.each(new Fields("user", "cq", "cf", "count"), new LogFilter());
   
@@ -123,29 +134,32 @@ public class OpenbusProcessorTopology {
 		return topology.build();				
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {	
+		Map<String, String> options = OptionsTip.getOptions(args);
+		
 		Config conf = new Config();		
-		conf.put(Conf.PROP_BROKER_TOPIC, Conf.KAFKA_TOPIC);
+		conf.put(Conf.PROP_BROKER_TOPIC, (String)options.get("topic"));
 		conf.put(Conf.PROP_KAFKA_IDCLIENT, Conf.KAFKA_IDCLIENT);
-		conf.put(Conf.PROP_ZOOKEEPER_HOST, Conf.ZOOKEEPER_HOST + ":" + Conf.ZOOKEEPER_PORT);
-		conf.put(Conf.PROP_ZOOKEEPER_BROKER, Conf.ZOOKEEPER_BROKER);		
+		conf.put(Conf.PROP_ZOOKEEPER_HOST, (String)options.get("zookepperHost"));
+		conf.put(Conf.PROP_ZOOKEEPER_BROKER, (String)options.get("broker"));
 		conf.put(Conf.PROP_HBASE_TABLE_REQUEST, Conf.HBASE_TABLE_REQUEST);
 		conf.put(Conf.PROP_HBASE_ROWID_USER, Conf.HBASE_ROWID_USER);
 		conf.put(Conf.PROP_HBASE_TABLE_USER, Conf.HBASE_TABLE_USER);
 		conf.put(Conf.PROP_HBASE_ROWID_REQUEST, Conf.HBASE_ROWID_REQUEST);
-		conf.put(Conf.PROP_OPENTSDB_USE, Conf.OPENTSDB_USE);						
-		conf.put(Conf.PROP_HDFS_USE, Conf.HDFS_USE);
-				
-		if (args.length == 0) {		
+		conf.put(Conf.PROP_OPENTSDB_USE, (String)options.get(Conf.PROP_OPENTSDB_USE));						
+		conf.put(Conf.PROP_HDFS_USE, (String)options.get(Conf.PROP_HDFS_USE));
+		conf.put(Conf.STATIC_HOST, (String)options.get(Conf.STATIC_HOST));		
+		
+		if (args.length == 0 || "local".equals((String)options.get("local"))) {		
 			LOG.info("Storm mode local");
 			LocalCluster cluster = new LocalCluster();
 		    cluster.submitTopology("openbus", conf, buildTopology(conf));			
 			Thread.sleep(2000);		    		    		   
 		     //cluster.shutdown();
 		} else {
-			LOG.info("Storm mode cluster");
+			LOG.info("Storm mode cluster");			
 			StormSubmitter.submitTopology("openbus", conf, buildTopology(conf));
 			Thread.sleep(2000);			
 		}
-	}	
+	}			
 }

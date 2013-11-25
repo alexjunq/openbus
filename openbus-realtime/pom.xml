@@ -69,7 +69,7 @@
 			<groupId>storm</groupId>
 			<artifactId>storm</artifactId>
 			<version>0.9.0-wip21</version>
-<!--   			<scope>provided</scope>   -->
+<!--             <scope>provided</scope>  -->
 		</dependency>		
 		<dependency>
 			<groupId>storm</groupId>

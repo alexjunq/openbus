@@ -21,15 +21,32 @@ Is necesary install the proyect storm-hbase (https://github.com/jrkinley/storm-h
     $ mvn clean compile
 
 
-#### Execute example in local
+#### Execute example TridentWordCount in local
 
-    $ mvn exec:java -Dexec.mainClass="com.produban.openbus.processor.examples.OpenbusProcessorFileTopology"
+    $ mvn exec:java -Dexec.mainClass="com.produban.openbus.processor.topology.OpenbusProcessorTopology"
 
 
-#### Deploy topology in cluster 
+#### Example for verification cluster Storm with Trident
 
     $ mvn package
-    $ storm jar target/openbus-realtime-0.0.1-jar-with-dependencies.jar com.produban.openbus.processor.topology.OpenbusProcessorTopology openbus
+    $ storm jar target/openbus-realtime-0.0.1-shaded.jarr com.produban.openbus.processor.topology.OpenbusProcessorTopology openbus
 
 
+#### Deploy topology in cluster
 
+	$ storm jar target/openbus-realtime-0.0.1-shaded.jar com.produban.openbus.processor.topology.OpenbusProcessorTopology openbus [-zookepperHost hostZookepper:port] [-topic webserverlog] [-staticHost hostKafka] [-broker brokers]
+
+##### Example
+	$ storm jar target/openbus-realtime-0.0.1-shaded.jar com.produban.openbus.processor.topology.OpenbusProcessorTopology openbus -zookepperHost vmlbcnimbusl01:2181 -topic webserverlog -staticHost vmlbcbrokerl02
+	
+
+#### HBase
+
+	Settings in file: \src\main\resources\hbase-site.xml
+	
+##### Tables in HBase
+	
+	$ create 'wslog_request', {NAME => 'data', 31536000 => 1},{NAME => 'hourly', VERSION => 1, TTL => 31536000}, {NAME => 'daily', VERSION => 1, TTL => 31536000}, {NAME => 'weekly', VERSION => 1, TTL => 31536000}, {NAME => 'monthly', VERSION => 1, TTL => 31536000}
+	$ create 'wslog_user', {NAME => 'data', VERSIONS => 1}, {NAME => 'hourly', VERSION => 1, TTL => 31536000}, {NAME => 'daily', VERSION => 1, TTL => 31536000}, {NAME => 'weekly', VERSION => 1, TTL => 31536000}, {NAME => 'monthly', VERSION => 1, TTL => 31536000}
+	
+	

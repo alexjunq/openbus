@@ -17,7 +17,13 @@ package com.produban.openbus.processor.spout;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import storm.kafka.BrokerHosts;
+import storm.kafka.HostPort;
 import storm.kafka.Partition;
+import storm.kafka.StaticHosts;
 import storm.kafka.ZkHosts;
 import storm.kafka.trident.GlobalPartitionInformation;
 import storm.kafka.trident.TransactionalTridentKafkaSpout;
@@ -30,10 +36,11 @@ import com.produban.openbus.processor.properties.Conf;
  * Kafka Broker Openbus
  */
 public class BrokerSpout {		
-	private final static String KAFKA_TOPIC = "jsonTopic";		
+	private static final Logger LOG = LoggerFactory.getLogger(BrokerSpout.class);
+	private final static String KAFKA_TOPIC = "webserverlog";		
 	private final static String KAFKA_IDCLIENT = "idOpenbus";	
 	private TridentKafkaConfig config = null;
-	private ZkHosts zhost = null; 
+	private ZkHosts zhost = null;
 	
 	@SuppressWarnings("rawtypes")
 	private IPartitionedTridentSpout<GlobalPartitionInformation, Partition, Map> partitionedTridentSpout = null;
@@ -49,8 +56,21 @@ public class BrokerSpout {
 	}
 	
 	public BrokerSpout(String kafkaTopic, String zookeperHost, String zookeperBroker) {    	
-    	zhost = new ZkHosts(zookeperHost, zookeperBroker);    	
+    	zhost = new ZkHosts(zookeperHost, zookeperBroker);    	    	    	
         config = new TridentKafkaConfig(zhost, kafkaTopic, KAFKA_IDCLIENT);                        
+	}
+		
+	public BrokerSpout(String kafkaTopic, String staticHosts, int port, String zookeperBroker) {
+		int i = 0;
+		GlobalPartitionInformation hostsAndPartitions = new GlobalPartitionInformation();		
+		String[] hosts = staticHosts.split(",");
+        for (String host : hosts) {   
+        	LOG.info("Host: " + host);
+        	hostsAndPartitions.addPartition(i, new HostPort(host, port));
+        	i++;
+        }
+        BrokerHosts brokerHosts = new StaticHosts(hostsAndPartitions);    	
+        config = new TridentKafkaConfig(brokerHosts, kafkaTopic, KAFKA_IDCLIENT);                        
 	}
 	
 	public BrokerSpout(String kafkaTopic, String zookeperHost, String zookeperBroker, String idClient) {    	

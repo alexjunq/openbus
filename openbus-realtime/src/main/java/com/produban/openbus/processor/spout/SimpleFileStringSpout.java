@@ -32,7 +32,6 @@ import backtype.storm.utils.Utils;
 
 /**
  * Spout File 
- *
  */
 public class SimpleFileStringSpout extends BaseRichSpout {
 	private static final long serialVersionUID = 4438467494562792399L;
