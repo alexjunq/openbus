@@ -86,7 +86,16 @@ public class OpenbusProcessorTopology {
 	    
 	    @SuppressWarnings("unchecked")
 	    StateFactory stateUser = HBaseAggregateState.transactional(configUser);
-		
+
+	    @SuppressWarnings("rawtypes")
+	    TridentConfig configSession = new TridentConfig(
+	    		(String)conf.get(Conf.PROP_HBASE_TABLE_SESSION), 
+	    		(String)conf.get(Conf.PROP_HBASE_ROWID_SESSION));
+	    
+	    @SuppressWarnings("unchecked")
+	    StateFactory stateSession = HBaseAggregateState.transactional(configSession);
+	    
+	    
 	    BrokerSpout openbusBrokerSpout = null;
 	    
 	    if(conf.get(Conf.STATIC_HOST) == null || "".equals(conf.get(Conf.STATIC_HOST))) {
@@ -120,6 +129,13 @@ public class OpenbusProcessorTopology {
 				//.persistentAggregate(new MemoryMapState.Factory(), new Count(), new Fields("count"))	// Test				
 				.newValuesStream()
 				.each(new Fields("user", "cq", "cf", "count"), new LogFilter());
+		
+		stream.each(new Fields("session", "datetime"), new DatePartition(), new Fields("cq", "cf"))
+				.groupBy(new Fields("session", "cq", "cf"))
+				.persistentAggregate(stateSession, new Count(), new Fields("count"))
+				//.persistentAggregate(new MemoryMapState.Factory(), new Count(), new Fields("count"))	// Test				
+				.newValuesStream()
+				.each(new Fields("session", "cq", "cf", "count"), new LogFilter());		
   
 		if (Constant.YES.equals(conf.get(Conf.PROP_OPENTSDB_USE))) {
 			LOG.info("OpenTSDB: " + conf.get(Conf.PROP_OPENTSDB_USE));
@@ -145,6 +161,8 @@ public class OpenbusProcessorTopology {
 		conf.put(Conf.PROP_HBASE_TABLE_REQUEST, Conf.HBASE_TABLE_REQUEST);
 		conf.put(Conf.PROP_HBASE_ROWID_USER, Conf.HBASE_ROWID_USER);
 		conf.put(Conf.PROP_HBASE_TABLE_USER, Conf.HBASE_TABLE_USER);
+		conf.put(Conf.PROP_HBASE_ROWID_SESSION, Conf.HBASE_ROWID_SESSION);
+		conf.put(Conf.PROP_HBASE_TABLE_SESSION, Conf.HBASE_TABLE_SESSION);		
 		conf.put(Conf.PROP_HBASE_ROWID_REQUEST, Conf.HBASE_ROWID_REQUEST);
 		conf.put(Conf.PROP_OPENTSDB_USE, (String)options.get(Conf.PROP_OPENTSDB_USE));						
 		conf.put(Conf.PROP_HDFS_USE, (String)options.get(Conf.PROP_HDFS_USE));

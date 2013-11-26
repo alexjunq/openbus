@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cat out | sed -e '1,5d' | sed -e '2,$d' ; paste -d" " <(cat out | head -n -2 | tac | head -n -6 | awk '{print $1  " "}') <(cat out | head -n -2 | tac | head -n -6 | awk '{print $3}' | cut  -d"," -f2 | cut -d"]" -f1) ; cat out | tail -n 2
+

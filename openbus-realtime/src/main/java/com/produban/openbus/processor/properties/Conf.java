@@ -31,12 +31,16 @@ public interface Conf {
 	
 	public final static String PROP_HBASE_TABLE_REQUEST = "hbase.table.request";
 	public final static String PROP_HBASE_ROWID_REQUEST = "hbase.rowid.request";
+	public final static String PROP_HBASE_ROWID_SESSION = "hbase.rowid.session";	
 	public final static String PROP_HBASE_ROWID_USER = "hbase.rowid.user";	
-	public final static String PROP_HBASE_TABLE_USER = "hbase.table.user";	
+	public final static String PROP_HBASE_TABLE_USER = "hbase.table.user";
+	public final static String PROP_HBASE_TABLE_SESSION = "hbase.table.session";
+	public final static String HBASE_TABLE_SESSION = "wslog_session";	
 	public final static String HBASE_TABLE_REQUEST = "wslog_request";
 	public final static String HBASE_TABLE_USER = "wslog_user";
 	public final static String HBASE_ROWID_REQUEST = "request";
 	public final static String HBASE_ROWID_USER = "user";
+	public final static String HBASE_ROWID_SESSION = "session";	
 		
 	public final static String PROP_OPENTSDB_USE = "opentsdb";
 	public final static String OPENTSDB_USE = "no";
