@@ -57,7 +57,7 @@ public class ApacheLogProducerTest  extends TestCase  {
 	 * 
 	 */
 	public void testApacheLogProducerMin() {
-		ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka-test.properties","testtopic2",0);
+		ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka-test.properties","webserverlog",0);
 		aps.apacheLogProducerHelper(1,1,1,1);		
         assertTrue( true );
 	}
@@ -67,8 +67,8 @@ public class ApacheLogProducerTest  extends TestCase  {
 	 * 
 	 */
 	public void testApacheLogProducer2Users() {
-		ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka-test.properties","tsdb1",0);
-		aps.apacheLogProducerHelper(100000,2,4,10);		
+		ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka-test.properties","webserverlog",0);
+		aps.apacheLogProducerHelper(100,2,4,4);		
         assertTrue( true );
 	}	
    
