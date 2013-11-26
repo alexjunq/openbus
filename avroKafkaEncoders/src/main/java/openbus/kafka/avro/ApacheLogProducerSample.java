@@ -171,7 +171,7 @@ public class ApacheLogProducerSample {
 							
 							IDSESION="0000z2ur1hruUUG-MhpsITK9JY_:" + k;
 							LINEAPETICION="page" + j%(2*(m+1));
-							TIEMPOEJECPETICION=cal.getTime().toString().replace(" ", "_"); 
+							TIEMPOEJECPETICION=cal.getTime().toString();//.replace(" ", "_"); 
 							USUARIOREMOTO="user"+m;
 							String payload=
 									 HOSTREMOTO[k%5] + "_#_" +
