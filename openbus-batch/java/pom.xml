@@ -6,6 +6,7 @@
       <groupId>produban</groupId>
       <artifactId>openbus</artifactId>
       <version>0.0.1-SNAPSHOT</version>
+      <relativePath>../../pom.xml</relativePath>
     </parent>
     <groupId>produban</groupId>
     <artifactId>openbus-batch</artifactId>
@@ -13,11 +14,11 @@
     <name>openbus-batch</name>
     <packaging>jar</packaging>
   <build>
-    <sourceDirectory>src</sourceDirectory>
-    <testSourceDirectory>test</testSourceDirectory>
+    <sourceDirectory>src/main</sourceDirectory>
+    <testSourceDirectory>src/test</testSourceDirectory>
     <resources>
       <resource>
-        <directory>src</directory>
+        <directory>src/main</directory>
         <excludes>
           <exclude>**/*.java</exclude>
         </excludes>
@@ -25,7 +26,7 @@
     </resources>
     <testResources>
       <testResource>
-        <directory>test</directory>
+        <directory>src/test</directory>
         <excludes>
           <exclude>**/*.java</exclude>
         </excludes>
