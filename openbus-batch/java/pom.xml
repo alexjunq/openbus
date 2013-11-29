@@ -8,9 +8,9 @@
       <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>produban</groupId>
-    <artifactId>openbus-analysis</artifactId>
+    <artifactId>openbus-batch</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>openbus-analysis</name>
+    <name>openbus-batch</name>
     <packaging>jar</packaging>
   <build>
     <sourceDirectory>src</sourceDirectory>
