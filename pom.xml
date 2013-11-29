@@ -16,7 +16,7 @@
 
 
   <modules>
-    <module>openbus-analysis</module>
+    <module>openbus-batch</module>
     <module>openbus-broker</module>
   </modules>
 </project>
