@@ -26,7 +26,7 @@ To deploy openbus on your environment, you need to first install all dependencie
   - Install Hadoop
   - [Install Kafka] (https://github.com/Produban/openbus/wiki/Deploying-Kafka-in-RHEL-6.4)
   - [Install Storm] (https://github.com/Produban/openbus/wiki/Install-Storm-cluster)
-  - Install Camus
+  - [Install Camus] (https://github.com/Produban/openbus/wiki/Installing-Camus)
 
 
 ### Installing openbus
