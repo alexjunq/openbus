@@ -94,8 +94,7 @@ public class OpenbusProcessorTopology {
 	    
 	    @SuppressWarnings("unchecked")
 	    StateFactory stateSession = HBaseAggregateState.transactional(configSession);
-	    
-	    
+	    	    
 	    BrokerSpout openbusBrokerSpout = null;
 	    
 	    if(conf.get(Conf.STATIC_HOST) == null || "".equals(conf.get(Conf.STATIC_HOST))) {
@@ -113,7 +112,7 @@ public class OpenbusProcessorTopology {
 	    }
 	    
 		stream = topology.newStream("spout", openbusBrokerSpout.getPartitionedTridentSpout());			
-		stream = stream.each(new Fields("bytes"), new AvroLogDecoder(), new Fields(fieldsWebLog));	    	   	    	    
+		stream = stream.each(new Fields("bytes"), new AvroLogDecoder(), new Fields(fieldsWebLog));
 		stream = stream.each(new Fields(fieldsWebLog), new WebServerLogFilter());
 		
 		stream.each(new Fields("request", "datetime"), new DatePartition(), new Fields("cq", "cf"))
