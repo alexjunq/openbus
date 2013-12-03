@@ -1,0 +1,6 @@
+
+# hbase shell
+
+create 'wslog_request', {NAME => 'data', 31536000 => 1},{NAME => 'hourly', VERSION => 1, TTL => 31536000}, {NAME => 'daily', VERSION => 1, TTL => 31536000}, {NAME => 'weekly', VERSION => 1, TTL => 31536000}, {NAME => 'monthly', VERSION => 1, TTL => 31536000}
+create 'wslog_user', {NAME => 'data', VERSIONS => 1}, {NAME => 'hourly', VERSION => 1, TTL => 31536000}, {NAME => 'daily', VERSION => 1, TTL => 31536000}, {NAME => 'weekly', VERSION => 1, TTL => 31536000}, {NAME => 'monthly', VERSION => 1, TTL => 31536000}
+create 'wslog_session', {NAME => 'data', VERSIONS => 1}, {NAME => 'hourly', VERSION => 1, TTL => 31536000}, {NAME => 'daily', VERSION => 1, TTL => 31536000}, {NAME => 'weekly', VERSION => 1, TTL => 31536000}, {NAME => 'monthly', VERSION => 1, TTL => 31536000}
