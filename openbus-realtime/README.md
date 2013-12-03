@@ -32,7 +32,8 @@ Is necesary install the proyect storm-hbase (https://github.com/jrkinley/storm-h
     $ storm jar target/openbus-realtime-0.0.1-shaded.jarr com.produban.openbus.processor.topology.OpenbusProcessorTopology openbus
 
 
-#### Deploy topology in cluster
+#### Installing Apache Storm in Cluster
+* <a href="https://github.com/Produban/openbus/wiki/Install-Storm-cluster">Installing Apache Storm in Cluster</a>
 
 	$ storm jar target/openbus-realtime-0.0.1-shaded.jar com.produban.openbus.processor.topology.OpenbusProcessorTopology openbus [-zookepperHost hostZookepper:port] [-topic webserverlog] [-staticHost hostKafka] [-broker brokers]
 
@@ -48,5 +49,7 @@ Is necesary install the proyect storm-hbase (https://github.com/jrkinley/storm-h
 	
 	$ create 'wslog_request', {NAME => 'data', 31536000 => 1},{NAME => 'hourly', VERSION => 1, TTL => 31536000}, {NAME => 'daily', VERSION => 1, TTL => 31536000}, {NAME => 'weekly', VERSION => 1, TTL => 31536000}, {NAME => 'monthly', VERSION => 1, TTL => 31536000}
 	$ create 'wslog_user', {NAME => 'data', VERSIONS => 1}, {NAME => 'hourly', VERSION => 1, TTL => 31536000}, {NAME => 'daily', VERSION => 1, TTL => 31536000}, {NAME => 'weekly', VERSION => 1, TTL => 31536000}, {NAME => 'monthly', VERSION => 1, TTL => 31536000}
-	
-	
+	$ create 'wslog_session', {NAME => 'data', VERSIONS => 1}, {NAME => 'hourly', VERSION => 1, TTL => 31536000}, {NAME => 'daily', VERSION => 1, TTL => 31536000}, {NAME => 'weekly', VERSION => 1, TTL => 31536000}, {NAME => 'monthly', VERSION => 1, TTL => 31536000}
+
+#### Install Storm cluster
+
