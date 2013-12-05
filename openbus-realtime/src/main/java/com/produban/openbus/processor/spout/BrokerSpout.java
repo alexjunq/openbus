@@ -60,22 +60,23 @@ public class BrokerSpout {
         config = new TridentKafkaConfig(zhost, kafkaTopic, KAFKA_IDCLIENT);                        
 	}
 		
-	public BrokerSpout(String kafkaTopic, String staticHosts, int port, String zookeperBroker) {
+	public BrokerSpout(String kafkaTopic, String staticHosts, int port, String idClient) {
 		int i = 0;
 		GlobalPartitionInformation hostsAndPartitions = new GlobalPartitionInformation();		
 		String[] hosts = staticHosts.split(",");
         for (String host : hosts) {   
-        	LOG.info("Host: " + host);
-        	hostsAndPartitions.addPartition(i, new HostPort(host, port));
+        	LOG.info("BrokerSpout. Host: " + host + " port: " + port + " topic: " + kafkaTopic + " idClient: " + idClient);
+        	hostsAndPartitions.addPartition(i, new HostPort(host, port));        	
         	i++;
         }
         BrokerHosts brokerHosts = new StaticHosts(hostsAndPartitions);    	
-        config = new TridentKafkaConfig(brokerHosts, kafkaTopic, KAFKA_IDCLIENT);                        
+        config = new TridentKafkaConfig(brokerHosts, kafkaTopic, idClient);                        
 	}
 	
 	public BrokerSpout(String kafkaTopic, String zookeperHost, String zookeperBroker, String idClient) {    	
     	zhost = new ZkHosts(zookeperHost, zookeperBroker);    	
         config = new TridentKafkaConfig(zhost, kafkaTopic, idClient);                        
+        LOG.info("BrokerSpout. zookeperHost: " + zookeperHost + " zookeperBroker: " + zookeperBroker + " topic: " + kafkaTopic + " idClient: " + idClient);
 	}
 	
 	@SuppressWarnings("rawtypes")
