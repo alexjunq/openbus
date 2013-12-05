@@ -39,7 +39,7 @@ public class OptionsTip {
 		}
 				
 		if (cl != null && cl.hasOption("local"))  
-			optionsStorm.put("local", cl.getOptionValue("local"));            
+			optionsStorm.put("local", "local");            
 		
 		if (cl != null && cl.getOptionValue("topic") != null && !"".equals(cl.getOptionValue("topic")))  
 			optionsStorm.put("topic", cl.getOptionValue("topic"));            
