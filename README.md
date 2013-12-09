@@ -3,12 +3,6 @@
 
 An open source framework for centralized logging and event management (batch and realtime).
 
-Openbus is currently splitted in the following subprojects:
-
- -  [openbus-broker](./openbus-broker): Messaging layer. based on [Apache Kafka](https://kafka.apache.org/).
- -  [openbus-batch](./openbus-batch): Batch processes for ingestion and analysis. Based on [Hadoop](http://hadoop.apache.org/) and related technologies.
- -  [openbus-realtime](./openbus-realtime): Real time consumptiom and analysis of events. Based on [Storm] (http://storm-project.net/).
-
 ##Use Cases
 
 Some use cases where openbus could be applied are:
