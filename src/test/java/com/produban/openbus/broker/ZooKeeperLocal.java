@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.produban.openbus.broker.producer;
+package com.produban.openbus.broker;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

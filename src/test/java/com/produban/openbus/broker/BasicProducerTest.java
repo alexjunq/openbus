@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.produban.openbus.broker.producer;
+package com.produban.openbus.broker;
 
 import static org.junit.Assert.*;
 import kafka.message.MessageAndMetadata;
@@ -22,7 +22,7 @@ import kafka.message.MessageAndMetadata;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.produban.openbus.broker.consumer.BasicConsumer;
+import com.produban.openbus.broker.BasicConsumer;
 
 public class BasicProducerTest {
 
@@ -35,6 +35,7 @@ public class BasicProducerTest {
 			kafka = new KafkaLocal();
 			Thread.sleep(5000);
 		} catch (Exception e){
+			e.printStackTrace(System.out);
 			fail("Error instantiating local Kafka broker");
 			System.out.println(e.getMessage());
 		}

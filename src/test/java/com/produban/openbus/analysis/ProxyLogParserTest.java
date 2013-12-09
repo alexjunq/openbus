@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.produban.openbus.analysis.util;
+package com.produban.openbus.analysis;
 
 import static org.junit.Assert.*;
 import java.util.HashMap;
 import org.junit.Test;
-import com.produban.openbus.analysis.util.ProxyLogParser;
+import com.produban.openbus.analysis.ProxyLogParser;
 
 public class ProxyLogParserTest {
 	

@@ -1,4 +1,4 @@
-package com.produban.openbus.analysis.udf;
+package com.produban.openbus.analysis;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -7,7 +7,7 @@ import org.apache.pig.data.DataType;
 import org.apache.pig.data.Tuple;
 import org.apache.pig.data.TupleFactory;
 import org.apache.pig.impl.logicalLayer.schema.Schema;
-import com.produban.openbus.analysis.util.ProxyLogParser;
+import com.produban.openbus.analysis.ProxyLogParser;
 
 
 public class ProxyLogParserUDF extends EvalFunc<Tuple> {

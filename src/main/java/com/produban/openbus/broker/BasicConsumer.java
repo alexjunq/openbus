@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.produban.openbus.broker.consumer;
+package com.produban.openbus.broker;
 
 import java.util.HashMap;
 import java.util.List;

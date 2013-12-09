@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.produban.openbus.analysis.util;
+package com.produban.openbus.analysis;
 
 
 import java.util.HashMap;
