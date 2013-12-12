@@ -3,12 +3,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>produban</groupId>
-  <artifactId>openbus</artifactId>
+  <artifactId>openbus-core</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>openbus</name>
-  <url>http://maven.apache.org</url>
+  <name>openbus-core</name>
+  <url>https://github.com/Produban/openbus</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -60,7 +60,7 @@
     <dependency>
         <groupId>org.apache.kafka</groupId>
         <artifactId>kafka_2.9.2</artifactId>
-        <version>0.8.0-beta1</version>
+        <version>0.8.0</version>
     </dependency>
       <dependency>
         <groupId>com.yammer.metrics</groupId>
