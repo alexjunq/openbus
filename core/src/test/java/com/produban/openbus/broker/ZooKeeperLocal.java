@@ -28,13 +28,10 @@ public class ZooKeeperLocal {
 	
 	ZooKeeperServerMain zooKeeperServer;
 	
-	public ZooKeeperLocal() throws FileNotFoundException, IOException{
-		Properties zookeeperProperties = new Properties();
-		zookeeperProperties.load(getClass().getResourceAsStream("zklocal.properties"));
-		
+	public ZooKeeperLocal(Properties zkProperties) throws FileNotFoundException, IOException{
 		QuorumPeerConfig quorumConfiguration = new QuorumPeerConfig();
 		try {
-		    quorumConfiguration.parseProperties(zookeeperProperties);
+		    quorumConfiguration.parseProperties(zkProperties);
 		} catch(Exception e) {
 		    throw new RuntimeException(e);
 		}

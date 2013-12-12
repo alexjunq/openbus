@@ -17,6 +17,9 @@
 package com.produban.openbus.broker;
 
 import static org.junit.Assert.*;
+
+import java.util.Properties;
+
 import kafka.message.MessageAndMetadata;
 
 import org.junit.BeforeClass;
@@ -30,16 +33,24 @@ public class BasicProducerTest {
 	static KafkaLocal kafka;
 
 	@BeforeClass
-	public static void startKafka(){		
+	public static void startKafka(){
+		Properties kafkaProperties = new Properties();
+		Properties zkProperties = new Properties();
+		
 		try {
-			kafka = new KafkaLocal();
+			//load properties
+			kafkaProperties.load(Class.class.getResourceAsStream("/kafkalocal.properties"));
+			zkProperties.load(Class.class.getResourceAsStream("/zklocal.properties"));
+			
+			//start kafka
+			kafka = new KafkaLocal(kafkaProperties, zkProperties);
 			Thread.sleep(5000);
 		} catch (Exception e){
 			e.printStackTrace(System.out);
-			fail("Error instantiating local Kafka broker");
-			System.out.println(e.getMessage());
+			fail("Error running local Kafka broker");
+			e.printStackTrace(System.out);
 		}
-		consumer = new BasicConsumer("test", kafka.getKafkaProperties().getProperty("zookeeper.connect"), "test_consumer_group");
+		consumer = new BasicConsumer("test", kafkaProperties.getProperty("zookeeper.connect"), "test_consumer_group");
 	}
 
 	@Test
@@ -51,10 +62,10 @@ public class BasicProducerTest {
 		producer.sendMessage(topic, "2", "second message");
 
 		MessageAndMetadata<byte[], byte[]> firstMessage = consumer.consumeOne();
-		assertEquals("first message", firstMessage.message());
+		assertEquals("first message", new String(firstMessage.message()));
 		
 		MessageAndMetadata<byte[], byte[]> secondMessage = consumer.consumeOne();
-		assertEquals("second message", secondMessage.message());
+		assertEquals("second message", new String(secondMessage.message()));
 
 	}
 
