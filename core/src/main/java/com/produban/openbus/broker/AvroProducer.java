@@ -1,4 +1,4 @@
-package openbus.kafka.avro;
+package com.produban.openbus.broker;
 
 /*
 * Copyright 2013 Produban
@@ -24,6 +24,8 @@ import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
 
 import org.apache.log4j.Logger;
+
+import com.produban.openbus.serialization.AvroSchemaSerializer;
  
 
 /**

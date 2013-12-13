@@ -1,4 +1,4 @@
-package openbus.kafka.avro;
+package com.produban.openbus.examples;
 
 /*
 * Copyright 2013 Produban
@@ -16,6 +16,7 @@ package openbus.kafka.avro;
 * limitations under the License.
 */
 
+import com.produban.openbus.broker.AvroProducer;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;

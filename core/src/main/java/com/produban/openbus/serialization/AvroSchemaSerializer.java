@@ -1,4 +1,4 @@
-package openbus.kafka.avro;
+package com.produban.openbus.serialization;
 
 /*
 * Copyright 2013 Produban
@@ -20,7 +20,6 @@ package openbus.kafka.avro;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.StringTokenizer;
 
 import org.apache.avro.Schema;
 import org.apache.avro.file.DataFileWriter;

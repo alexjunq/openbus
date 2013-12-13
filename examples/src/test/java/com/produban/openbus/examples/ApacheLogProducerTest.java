@@ -1,4 +1,4 @@
-package openbus.kafka.avro.test;
+package com.produban.openbus.examples;
 
 /*
 * Copyright 2013 Produban
@@ -19,7 +19,7 @@ package openbus.kafka.avro.test;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import openbus.kafka.avro.ApacheLogProducerSample;
+import com.produban.openbus.examples.ApacheLogProducerSample;
 
 /**
  * Unit test for schema encoded avro message to kafka.
@@ -47,7 +47,7 @@ public class ApacheLogProducerTest  extends TestCase  {
 	 * 
 	 */
 	public void testApacheLogProducer() {
-		ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka-test.properties","testtopic1", 0);
+		ApacheLogProducerSampleTemp aps = new ApacheLogProducerSampleTemp("/kafka-test.properties","testtopic1", 0);
 		aps.apacheLogProducerHelper(100,5,10,10);		
         assertTrue( true );
 	}
@@ -57,7 +57,7 @@ public class ApacheLogProducerTest  extends TestCase  {
 	 * 
 	 */
 	public void testApacheLogProducerMin() {
-		ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka-test.properties","webserverlog",0);
+		ApacheLogProducerSampleTemp aps = new ApacheLogProducerSampleTemp("/kafka-test.properties","webserverlog",0);
 		aps.apacheLogProducerHelper(1,1,1,1);		
         assertTrue( true );
 	}
@@ -67,7 +67,7 @@ public class ApacheLogProducerTest  extends TestCase  {
 	 * 
 	 */
 	public void testApacheLogProducer2Users() {
-		ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka-test.properties","webserverlog",0);
+		ApacheLogProducerSampleTemp aps = new ApacheLogProducerSampleTemp("/kafka-test.properties","webserverlog",0);
 		aps.apacheLogProducerHelper(100,2,4,4);		
         assertTrue( true );
 	}	
