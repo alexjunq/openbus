@@ -13,7 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.produban.openbus.processor.function;
+package com.produban.openbus.analysis;
 
 
 import java.io.ByteArrayInputStream;
@@ -33,7 +33,7 @@ import storm.trident.operation.TridentOperationContext;
 import storm.trident.tuple.TridentTuple;
 import backtype.storm.tuple.Values;
 
-import com.produban.openbus.processor.util.FormatUtil;
+import com.produban.openbus.util.FormatUtil;
 
 /**
  * Avro message decoder to json for web server log 
