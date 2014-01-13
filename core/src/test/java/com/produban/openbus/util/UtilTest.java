@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.produban.openbus.processor;
+package com.produban.openbus.util;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -23,7 +23,6 @@ import junit.framework.TestSuite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.produban.openbus.processor.util.FormatUtil;
 
 /**
  * Unit test for UtilTest.

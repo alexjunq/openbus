@@ -1,4 +1,4 @@
-package com.produban.openbus.processor.spout;
+package com.produban.openbus.analysis;
 
 import java.util.Map;
 

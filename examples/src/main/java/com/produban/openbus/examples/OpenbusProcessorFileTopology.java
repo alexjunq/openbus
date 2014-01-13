@@ -13,13 +13,23 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.produban.openbus.processor.examples;
+package com.produban.openbus.examples;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.produban.openbus.analysis.SimpleFileStringSpout;
+import com.produban.openbus.analysis.WebServerLog2TSDB;
+import com.produban.openbus.filter.WebServerLogFilter;
+import com.produban.openbus.persistence.HDFSPersistence;
+import com.produban.openbus.util.Conf;
+import com.produban.openbus.util.Constant;
+import com.produban.openbus.util.DatePartition;
+import com.produban.openbus.util.LogFilter;
+import com.produban.openbus.util.WebServerLog2Json;
 
 import storm.trident.Stream;
 import storm.trident.TridentTopology;
@@ -31,20 +41,11 @@ import backtype.storm.StormSubmitter;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.tuple.Fields;
 
-import com.produban.openbus.processor.aggregator.WebServerLog2TSDB;
-import com.produban.openbus.processor.filter.WebServerLogFilter;
-import com.produban.openbus.processor.function.DatePartition;
-import com.produban.openbus.processor.function.HDFSPersistence;
-import com.produban.openbus.processor.function.WebServerLog2Json;
-import com.produban.openbus.processor.properties.Conf;
-import com.produban.openbus.processor.properties.Constant;
-import com.produban.openbus.processor.spout.SimpleFileStringSpout;
-import com.produban.openbus.processor.util.LogFilter;
 
 /**
  * Test topology openbus-realtime with Spout file and no persistence in HBase   
  */
-public class OpenbusProcessorFileTopology {	
+public class OpenbusProcessorFileTopology {
 	private static Logger LOG = LoggerFactory.getLogger(OpenbusProcessorFileTopology.class);
 		    
 	public static StormTopology buildTopology(Config conf) {			
@@ -106,12 +107,12 @@ public class OpenbusProcessorFileTopology {
 		conf.put(Conf.PROP_BROKER_TOPIC, Conf.KAFKA_TOPIC);
 		conf.put(Conf.PROP_KAFKA_IDCLIENT, Conf.KAFKA_IDCLIENT);
 		conf.put(Conf.PROP_ZOOKEEPER_HOST, Conf.ZOOKEEPER_HOST + ":" + Conf.ZOOKEEPER_PORT);
-		conf.put(Conf.PROP_ZOOKEEPER_BROKER, Conf.ZOOKEEPER_BROKER);		
+		conf.put(Conf.PROP_ZOOKEEPER_BROKER, Conf.ZOOKEEPER_BROKER);
 		conf.put(Conf.PROP_HBASE_TABLE_REQUEST, Conf.HBASE_TABLE_REQUEST);
 		conf.put(Conf.PROP_HBASE_ROWID_USER, Conf.HBASE_ROWID_USER);
 		conf.put(Conf.PROP_HBASE_TABLE_USER, Conf.HBASE_TABLE_USER);
 		conf.put(Conf.PROP_HBASE_ROWID_REQUEST, Conf.HBASE_ROWID_REQUEST);
-		conf.put(Conf.PROP_OPENTSDB_USE, Conf.OPENTSDB_USE);						
+		conf.put(Conf.PROP_OPENTSDB_USE, Conf.OPENTSDB_USE);
 		conf.put(Conf.PROP_HDFS_USE, Conf.HDFS_USE);
 				
 		if (args.length == 0) {		

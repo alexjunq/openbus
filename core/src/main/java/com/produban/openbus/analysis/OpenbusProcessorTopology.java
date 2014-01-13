@@ -13,7 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.produban.openbus.processor.topology;
+package com.produban.openbus.analysis;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +21,14 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.produban.openbus.filter.WebServerLogFilter;
+import com.produban.openbus.persistence.HDFSPersistence;
+import com.produban.openbus.util.Conf;
+import com.produban.openbus.util.Constant;
+import com.produban.openbus.util.DatePartition;
+import com.produban.openbus.util.LogFilter;
+import com.produban.openbus.util.OptionsTip;
 
 import storm.trident.Stream;
 import storm.trident.TridentTopology;
@@ -33,17 +41,6 @@ import backtype.storm.contrib.hbase.trident.HBaseAggregateState;
 import backtype.storm.contrib.hbase.utils.TridentConfig;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.tuple.Fields;
-
-import com.produban.openbus.processor.aggregator.WebServerLog2TSDB;
-import com.produban.openbus.processor.filter.WebServerLogFilter;
-import com.produban.openbus.processor.function.AvroLogDecoder;
-import com.produban.openbus.processor.function.DatePartition;
-import com.produban.openbus.processor.function.HDFSPersistence;
-import com.produban.openbus.processor.properties.Conf;
-import com.produban.openbus.processor.properties.Constant;
-import com.produban.openbus.processor.spout.BrokerSpout;
-import com.produban.openbus.processor.util.LogFilter;
-import com.produban.openbus.processor.util.OptionsTip;
 
 /**
  * Topology openbus-realtime

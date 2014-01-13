@@ -13,12 +13,14 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.produban.openbus.processor.spout;
+package com.produban.openbus.analysis;
 
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.produban.openbus.util.Conf;
 
 import storm.kafka.BrokerHosts;
 import storm.kafka.HostPort;
@@ -30,7 +32,6 @@ import storm.kafka.trident.TransactionalTridentKafkaSpout;
 import storm.kafka.trident.TridentKafkaConfig;
 import storm.trident.spout.IPartitionedTridentSpout;
 
-import com.produban.openbus.processor.properties.Conf;
 
 /**
  * Kafka Broker Openbus

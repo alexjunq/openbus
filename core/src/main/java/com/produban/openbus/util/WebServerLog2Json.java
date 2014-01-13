@@ -13,7 +13,9 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.produban.openbus.processor.function;
+
+
+package com.produban.openbus.util;
 
 import java.util.Map;
 
@@ -27,7 +29,6 @@ import storm.trident.operation.TridentOperationContext;
 import storm.trident.tuple.TridentTuple;
 import backtype.storm.tuple.Values;
 
-import com.produban.openbus.processor.util.FormatUtil;
 
 /**
  * Convert Web Server logs messages Avro format Json format    

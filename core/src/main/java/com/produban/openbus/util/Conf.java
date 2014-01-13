@@ -13,7 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.produban.openbus.processor.properties;
+package com.produban.openbus.util;
 
 public interface Conf {
 	public final static String PROP_ZOOKEEPER_HOST = "zookeper.host";

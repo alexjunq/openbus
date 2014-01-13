@@ -13,12 +13,12 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.produban.openbus.processor.filter;
+package com.produban.openbus.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.produban.openbus.processor.properties.Conf;
+import com.produban.openbus.util.Conf;
 
 import storm.trident.operation.BaseFilter;
 import storm.trident.tuple.TridentTuple;

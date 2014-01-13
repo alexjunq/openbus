@@ -13,7 +13,9 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.produban.openbus.processor.function;
+
+
+package com.produban.openbus.persistence;
 
 
 import java.io.File;
@@ -22,14 +24,14 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.produban.openbus.util.FormatUtil;
+
 import storm.trident.operation.BaseFunction;
 import storm.trident.operation.TridentCollector;
 import storm.trident.operation.TridentOperationContext;
 import storm.trident.tuple.TridentTuple;
 import backtype.storm.tuple.Values;
 
-import com.produban.openbus.processor.hdfs.HDFSStore;
-import com.produban.openbus.processor.util.FormatUtil;
 
 /**
  * Function Storm/Trident persistence in HDFS   

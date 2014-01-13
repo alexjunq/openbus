@@ -1,4 +1,4 @@
-package com.produban.openbus.processor.util;
+package com.produban.openbus.util;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,8 +10,6 @@ import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.produban.openbus.processor.properties.Conf;
-import com.produban.openbus.processor.properties.Constant;
 
 public class OptionsTip {
 	private static final Logger LOG = LoggerFactory.getLogger(OptionsTip.class);
